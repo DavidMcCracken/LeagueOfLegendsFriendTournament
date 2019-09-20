@@ -6,7 +6,6 @@ namespace LeagueOfLegendsFriendTournament.API.Models
     public class Tournament
     {
         public int TournamentId { get; set; }
-        public User[] UsersInTournament { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         

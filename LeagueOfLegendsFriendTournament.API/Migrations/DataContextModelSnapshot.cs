@@ -32,14 +32,20 @@ namespace LeagueOfLegendsFriendTournament.API.Migrations
 
             modelBuilder.Entity("LeagueOfLegendsFriendTournament.API.Models.TournamentUser", b =>
                 {
-                    b.Property<int>("InTournamentID")
+                    b.Property<int>("TournamentUserId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("TournamentID");
 
                     b.Property<int>("UserID");
 
-                    b.HasKey("InTournamentID");
+                    b.Property<int>("Wins");
+
+                    b.HasKey("TournamentUserId");
+
+                    b.HasIndex("TournamentID");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("TournamentUsers");
                 });
@@ -49,13 +55,9 @@ namespace LeagueOfLegendsFriendTournament.API.Migrations
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Password");
+                    b.Property<byte[]>("PasswordHash");
 
-                    b.Property<string>("SaltedPassword");
-
-                    b.Property<int?>("TournamentId");
-
-                    b.Property<int>("TournamentsAssociated");
+                    b.Property<byte[]>("PasswordSalted");
 
                     b.Property<int>("TournamentsLost");
 
@@ -65,16 +67,20 @@ namespace LeagueOfLegendsFriendTournament.API.Migrations
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("TournamentId");
-
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("LeagueOfLegendsFriendTournament.API.Models.User", b =>
+            modelBuilder.Entity("LeagueOfLegendsFriendTournament.API.Models.TournamentUser", b =>
                 {
-                    b.HasOne("LeagueOfLegendsFriendTournament.API.Models.Tournament")
-                        .WithMany("UsersInTournament")
-                        .HasForeignKey("TournamentId");
+                    b.HasOne("LeagueOfLegendsFriendTournament.API.Models.Tournament", "Tournament")
+                        .WithMany("TournamentUser")
+                        .HasForeignKey("TournamentID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("LeagueOfLegendsFriendTournament.API.Models.User", "User")
+                        .WithMany("TournamentUser")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

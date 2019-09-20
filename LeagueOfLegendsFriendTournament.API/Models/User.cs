@@ -6,9 +6,8 @@ namespace LeagueOfLegendsFriendTournament.API.Models
     {
         public int UserId { get; set; }
         public string Username { get; set; }
-        public string Password { get; set; }
-        public string SaltedPassword { get; set; }
-        public int TournamentsAssociated { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalted { get; set; }
         public int TournamentsWon { get; set; }
         public int TournamentsLost { get; set; }
         
