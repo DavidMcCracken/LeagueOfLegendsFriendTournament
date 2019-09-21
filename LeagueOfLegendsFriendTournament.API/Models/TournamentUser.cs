@@ -16,5 +16,6 @@ namespace LeagueOfLegendsFriendTournament.API.Models
         //Foreign key for Tournament
         public int TournamentID { get; set; }
         public Tournament Tournament{ get; set; }
+
     }
 }

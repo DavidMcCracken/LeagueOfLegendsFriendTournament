@@ -13,6 +13,8 @@ namespace LeagueOfLegendsFriendTournament.API.Models
         
         //tells EF TournamentUser is referencing UserId key
         public ICollection<TournamentUser> TournamentUser { get; set; }
+        public ICollection<GameData> GameData { get; set; }
+
 
     }
 }

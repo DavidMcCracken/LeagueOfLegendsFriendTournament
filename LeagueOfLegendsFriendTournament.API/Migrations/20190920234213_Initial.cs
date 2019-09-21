@@ -39,6 +39,43 @@ namespace LeagueOfLegendsFriendTournament.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GameDatas",
+                columns: table => new
+                {
+                    GameDataId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserID = table.Column<int>(nullable: false),
+                    TournamentID = table.Column<int>(nullable: false),
+                    Win = table.Column<bool>(nullable: false),
+                    Kills = table.Column<int>(nullable: false),
+                    Deaths = table.Column<int>(nullable: false),
+                    Assists = table.Column<float>(nullable: false),
+                    LongestTimeSpentLiving = table.Column<int>(nullable: false),
+                    KillingSprees = table.Column<int>(nullable: false),
+                    GoldEarned = table.Column<int>(nullable: false),
+                    DotalDamageDealt = table.Column<int>(nullable: false),
+                    VisionScore = table.Column<int>(nullable: false),
+                    Champion = table.Column<string>(nullable: true),
+                    Role = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameDatas", x => x.GameDataId);
+                    table.ForeignKey(
+                        name: "FK_GameDatas_Tournaments_TournamentID",
+                        column: x => x.TournamentID,
+                        principalTable: "Tournaments",
+                        principalColumn: "TournamentId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GameDatas_Users_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TournamentUsers",
                 columns: table => new
                 {
@@ -66,6 +103,16 @@ namespace LeagueOfLegendsFriendTournament.API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_GameDatas_TournamentID",
+                table: "GameDatas",
+                column: "TournamentID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GameDatas_UserID",
+                table: "GameDatas",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TournamentUsers_TournamentID",
                 table: "TournamentUsers",
                 column: "TournamentID");
@@ -78,6 +125,9 @@ namespace LeagueOfLegendsFriendTournament.API.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "GameDatas");
+
             migrationBuilder.DropTable(
                 name: "TournamentUsers");
 

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LeagueOfLegendsFriendTournament.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190911041455_Initial")]
+    [Migration("20190920234213_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,6 +17,46 @@ namespace LeagueOfLegendsFriendTournament.API.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
+
+            modelBuilder.Entity("LeagueOfLegendsFriendTournament.API.Models.GameData", b =>
+                {
+                    b.Property<int>("GameDataId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<float>("Assists");
+
+                    b.Property<string>("Champion");
+
+                    b.Property<int>("Deaths");
+
+                    b.Property<int>("DotalDamageDealt");
+
+                    b.Property<int>("GoldEarned");
+
+                    b.Property<int>("KillingSprees");
+
+                    b.Property<int>("Kills");
+
+                    b.Property<int>("LongestTimeSpentLiving");
+
+                    b.Property<string>("Role");
+
+                    b.Property<int>("TournamentID");
+
+                    b.Property<int>("UserID");
+
+                    b.Property<int>("VisionScore");
+
+                    b.Property<bool>("Win");
+
+                    b.HasKey("GameDataId");
+
+                    b.HasIndex("TournamentID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("GameDatas");
+                });
 
             modelBuilder.Entity("LeagueOfLegendsFriendTournament.API.Models.Tournament", b =>
                 {
@@ -70,6 +110,19 @@ namespace LeagueOfLegendsFriendTournament.API.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("LeagueOfLegendsFriendTournament.API.Models.GameData", b =>
+                {
+                    b.HasOne("LeagueOfLegendsFriendTournament.API.Models.Tournament", "Tournament")
+                        .WithMany("GameData")
+                        .HasForeignKey("TournamentID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("LeagueOfLegendsFriendTournament.API.Models.User", "User")
+                        .WithMany("GameData")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("LeagueOfLegendsFriendTournament.API.Models.TournamentUser", b =>

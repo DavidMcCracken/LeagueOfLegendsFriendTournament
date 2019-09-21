@@ -20,11 +20,11 @@ namespace LeagueOfLegendsFriendTournament.API.Controllers
             this._context = context;
 
         }
-        // GET api/values
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetValues()
         {
-            var values = await _context.Tournaments.ToListAsync();
+            var values = await _context.Users.ToListAsync();
             return Ok(values);
         }
 
