@@ -1,17 +1,20 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark bg-primary mb-4">
   <div class="container">
     
-      <a class="navbar-brand" href="#">League Friends Tournament</a>
+      <a class="navbar-brand" [routerLink]="['/home']"  >League Friends Tournament</a>
 
       <ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Create Tournament</a>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/create-tournament']">Create Tournament</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Join Tournament</a>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/join-tournament']">Join Tournament</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Messages</a>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/active-tournaments']">Active Tournaments</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/messages']">Messages</a>
         </li>
       </ul>
   
