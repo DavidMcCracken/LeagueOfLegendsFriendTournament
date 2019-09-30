@@ -14,7 +14,11 @@ namespace LeagueOfLegendsFriendTournament.API.Migrations
                     TournamentId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     StartTime = table.Column<DateTime>(nullable: false),
-                    EndTime = table.Column<DateTime>(nullable: false)
+                    EndTime = table.Column<DateTime>(nullable: false),
+                    TournamentName = table.Column<string>(nullable: true),
+                    GameType = table.Column<string>(nullable: true),
+                    CreatorOfTournament = table.Column<int>(nullable: false),
+                    Active = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,7 +57,7 @@ namespace LeagueOfLegendsFriendTournament.API.Migrations
                     LongestTimeSpentLiving = table.Column<int>(nullable: false),
                     KillingSprees = table.Column<int>(nullable: false),
                     GoldEarned = table.Column<int>(nullable: false),
-                    DotalDamageDealt = table.Column<int>(nullable: false),
+                    totalDamageDealt = table.Column<int>(nullable: false),
                     VisionScore = table.Column<int>(nullable: false),
                     Champion = table.Column<string>(nullable: true),
                     Role = table.Column<string>(nullable: true)

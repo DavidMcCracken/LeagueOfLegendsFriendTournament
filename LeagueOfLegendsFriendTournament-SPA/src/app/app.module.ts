@@ -14,10 +14,11 @@ import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { AlertifyService } from './_services/alertify.service';
 import { JoinTournamentComponent } from './join-tournament/join-tournament.component';
 import { MessagesComponent } from './messages/messages.component';
-import { CreateTournamentComponent } from './create-tournament/create-tournament.component';
 import { appRoutes } from './routes';
 import { ActiveTournamentsComponent } from './active-tournaments/active-tournaments.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { RegisterTournamentComponent } from './register-tournament/register-tournament.component';
+import { CreateTournamentService } from './_services/create-tournament.service';
 
 
 @NgModule({
@@ -28,8 +29,8 @@ import { AuthGuard } from './_guards/auth.guard';
       RegisterComponent,
       JoinTournamentComponent,
       MessagesComponent,
-      CreateTournamentComponent,
-      ActiveTournamentsComponent
+      ActiveTournamentsComponent,
+      RegisterTournamentComponent
    ],
    imports: [
       BrowserModule,
@@ -42,7 +43,8 @@ import { AuthGuard } from './_guards/auth.guard';
       AuthService,
       ErrorInterceptorProvider,
       AlertifyService,
-      AuthGuard
+      AuthGuard,
+      CreateTournamentService
    ],
    bootstrap: [
       AppComponent

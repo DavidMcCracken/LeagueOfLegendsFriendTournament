@@ -21,7 +21,7 @@ namespace LeagueOfLegendsFriendTournament.API.Models
         public int LongestTimeSpentLiving { get; set; }
         public int KillingSprees { get; set; }
         public int GoldEarned { get; set; }
-        public int DotalDamageDealt { get; set; }
+        public int totalDamageDealt { get; set; }
         public int VisionScore { get; set; }
         public string Champion { get; set; }
         public string Role { get; set; }

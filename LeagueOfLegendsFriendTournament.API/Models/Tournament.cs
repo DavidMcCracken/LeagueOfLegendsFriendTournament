@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using LeagueOfLegendsFriendTournament.API.Helpers;
 
 namespace LeagueOfLegendsFriendTournament.API.Models
 {
@@ -8,6 +9,10 @@ namespace LeagueOfLegendsFriendTournament.API.Models
         public int TournamentId { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+        public string TournamentName { get; set; }
+        public string GameType {get; set; }
+        public int CreatorOfTournament { get; set; }
+        public int Active { get; set; }
         
         //tells EF TournamentUser is referencing TournamentId
         public ICollection<TournamentUser> TournamentUser { get; set; }

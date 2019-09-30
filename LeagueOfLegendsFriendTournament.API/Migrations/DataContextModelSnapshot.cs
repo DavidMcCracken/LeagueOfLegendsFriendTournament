@@ -27,8 +27,6 @@ namespace LeagueOfLegendsFriendTournament.API.Migrations
 
                     b.Property<int>("Deaths");
 
-                    b.Property<int>("DotalDamageDealt");
-
                     b.Property<int>("GoldEarned");
 
                     b.Property<int>("KillingSprees");
@@ -47,6 +45,8 @@ namespace LeagueOfLegendsFriendTournament.API.Migrations
 
                     b.Property<bool>("Win");
 
+                    b.Property<int>("totalDamageDealt");
+
                     b.HasKey("GameDataId");
 
                     b.HasIndex("TournamentID");
@@ -61,9 +61,17 @@ namespace LeagueOfLegendsFriendTournament.API.Migrations
                     b.Property<int>("TournamentId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("Active");
+
+                    b.Property<int>("CreatorOfTournament");
+
                     b.Property<DateTime>("EndTime");
 
+                    b.Property<string>("GameType");
+
                     b.Property<DateTime>("StartTime");
+
+                    b.Property<string>("TournamentName");
 
                     b.HasKey("TournamentId");
 
