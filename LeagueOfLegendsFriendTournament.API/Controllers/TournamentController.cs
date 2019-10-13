@@ -14,7 +14,6 @@ namespace LeagueOfLegendsFriendTournament.API.Controllers
         private readonly ITournamentRepository _repo;
         private readonly IConfiguration _config;
 
-        
         public TournamentController(ITournamentRepository repo, IConfiguration config){
             this._repo = repo;
             this._config = config;
@@ -22,17 +21,21 @@ namespace LeagueOfLegendsFriendTournament.API.Controllers
 
         [HttpPost("create")]
         public async Task<IActionResult> Create(CreateTournamentDto createTournamentDto){
-            var TournamentToCreate = new Tournament {
+            
+            var createdTournament = await _repo.Create(createTournamentDto);
+            return Ok(createdTournament);
+        }
 
-                TournamentName = createTournamentDto.TournamentName,
-                CreatorOfTournament = createTournamentDto.CreaterOfTournament,
-                StartTime = createTournamentDto.StartTime,
-                EndTime = createTournamentDto.EndTime,
-                GameType = createTournamentDto.GameType,
-                Active = 1
-            };
-            var createdTournament = await _repo.Create(TournamentToCreate);
-            return Ok(TournamentToCreate);
+        [HttpGet("retrieve-all-active")]
+        public async Task<IActionResult> RetrieveAllActive(){
+            var tournaments = await _repo.RetrieveAllActive();
+            return Ok(tournaments);
+        }
+
+        [HttpGet("JoinTournamentList")]
+        public async Task<IActionResult> JoinTournamentData(){
+            var tournaments = await _repo.JoinTournamentData();
+            return Ok(tournaments);
         }
         
     }

@@ -1,7 +1,9 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using LeagueOfLegendsFriendTournament.API.Models;
-
+using System.Collections.Generic;
+using System.Linq;
+using LeagueOfLegendsFriendTournament.API.Dtos;
 
 namespace LeagueOfLegendsFriendTournament.API.Data
 {
@@ -12,12 +14,20 @@ namespace LeagueOfLegendsFriendTournament.API.Data
             this._context = context;
         }
 
-        public async Task<Tournament> Create(Tournament tournament)
+        public async Task<Tournament> Create(CreateTournamentDto createTournamentDto)
         {
-            await _context.Tournaments.AddAsync(tournament);
-            await _context.SaveChangesAsync();
-            return tournament;
+            var TournamentToCreate = new Tournament {
 
+                TournamentName = createTournamentDto.TournamentName,
+                CreatorOfTournament = createTournamentDto.CreaterOfTournament,
+                StartTime = createTournamentDto.StartTime,
+                EndTime = createTournamentDto.EndTime,
+                GameType = createTournamentDto.GameType,
+                Active = 1
+            };
+            await _context.Tournaments.AddAsync(TournamentToCreate);
+            await _context.SaveChangesAsync();
+            return TournamentToCreate;
         }
 
         public async Task<bool> RemoveFromActive(int tournamentId)
@@ -29,7 +39,25 @@ namespace LeagueOfLegendsFriendTournament.API.Data
             _context.Tournaments.Remove(Tournament);
             await _context.SaveChangesAsync();
             return true;
+        }
 
+        public async Task<List<Tournament>> RetrieveAllActive(){
+            var tournaments = await _context.Tournaments.Where(x => x.Active ==1).ToListAsync();
+            return tournaments;
+        }
+
+        public async Task<List<JoinTournamentDto>> JoinTournamentData(){
+            var values = await (from ep in _context.Users
+            join e in _context.Tournaments on ep.UserId equals e.CreatorOfTournament
+            where e.Active == 1
+            select new JoinTournamentDto {
+                TournamentId = e.TournamentId,
+                UserId = ep.UserId,
+                TournamentName = e.TournamentName,
+                Username = ep.Username,
+                Active = e.Active
+            }).ToListAsync();
+            return values;
         }
     }
 }

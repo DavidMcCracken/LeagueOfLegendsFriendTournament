@@ -1,3 +1,10 @@
-<p>
-  join-tournament works!
-</p>
+<div *ngFor="let tournament of model">
+<div class="card" style="width: 18rem;">
+  
+  <div class="card-body">
+    <h5 class="card-title">{{tournament.tournamentName}}</h5>
+    <p class="card-text">Created by {{tournament.username}} </p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+</div>
