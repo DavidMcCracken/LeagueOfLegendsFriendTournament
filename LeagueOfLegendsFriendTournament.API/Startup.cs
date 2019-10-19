@@ -34,12 +34,19 @@ namespace LeagueOfLegendsFriendTournament.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddCors();
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<ITournamentRepository, TournamentRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRiotGamesRepository, RiotGamesRepository>();
+            Action<Riot> RiotToken = (token =>{
+                token.RiotToken = Configuration["Riot:RiotToken"];
+            });
+            services.Configure(RiotToken);
+            services.AddSingleton(resolve => resolve.GetRequiredService<IOptions<Riot>>().Value);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => 
             {
                 options.TokenValidationParameters = new TokenValidationParameters{ 

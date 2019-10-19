@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using LeagueOfLegendsFriendTournament.API.Data;
+using LeagueOfLegendsFriendTournament.API.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 
 namespace LeagueOfLegendsFriendTournament.API.Controllers
 {
@@ -15,11 +21,12 @@ namespace LeagueOfLegendsFriendTournament.API.Controllers
     public class ValuesController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly string riotToken;
 
-        public ValuesController(DataContext context)
+        public ValuesController(DataContext context, Riot token)
         {
             this._context = context;
-
+            this.riotToken = token.RiotToken;
 
         }
 
@@ -27,8 +34,16 @@ namespace LeagueOfLegendsFriendTournament.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetValues()
         {
-            var values = await _context.Users.ToListAsync();
-            return Ok(values);
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            string url="https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/twokdavey";
+            client.DefaultRequestHeaders.Add("X-Riot-Token", riotToken);
+            HttpResponseMessage response = await client.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            var body = await response.Content.ReadAsStringAsync();
+            JObject json = JObject.Parse(body);
+            return Ok(json);
+
         }
 
         [AllowAnonymous]
@@ -36,7 +51,7 @@ namespace LeagueOfLegendsFriendTournament.API.Controllers
         public async Task<IActionResult> GetValue(int id)
         {
             var value = await _context.Tournaments.FirstOrDefaultAsync(x => x.TournamentId == id);
-            return Ok(value);
+            return Ok(value.ToString());
         }
 
         // POST api/values
