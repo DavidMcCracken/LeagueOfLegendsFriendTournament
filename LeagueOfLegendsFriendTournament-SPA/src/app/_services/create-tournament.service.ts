@@ -13,8 +13,12 @@ constructor(private http: HttpClient) { }
 
   create(model: any){
     return this.http.post(this.baseUrl + 'create', model);
-
   }
+
+  addUser(addUser: any) {
+    return this.http.post(this.baseUrl + 'adduser', addUser);
+  }
+
   retrieveAllActive() {
     return this.http.get(this.baseUrl + 'retrieve-all-active');
   }

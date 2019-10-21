@@ -27,7 +27,23 @@ namespace LeagueOfLegendsFriendTournament.API.Data
             };
             await _context.Tournaments.AddAsync(TournamentToCreate);
             await _context.SaveChangesAsync();
+
             return TournamentToCreate;
+        }
+        public async Task<TournamentUser> AddUser(AddUserToTournamentDto addUser)
+        {
+            var Tournament = await _context.Tournaments.FirstOrDefaultAsync(x => x.TournamentName == addUser.TournamentName && x.CreatorOfTournament ==addUser.CreaterOfTournament);
+            if(Tournament == null) {
+                return null;
+            }
+            var TournamentUser = new TournamentUser
+            {
+                UserID = addUser.CreaterOfTournament,
+                TournamentID = Tournament.TournamentId
+            };
+            await _context.TournamentUsers.AddAsync(TournamentUser);
+            await _context.SaveChangesAsync();
+            return TournamentUser;
         }
 
         public async Task<bool> RemoveFromActive(int tournamentId)

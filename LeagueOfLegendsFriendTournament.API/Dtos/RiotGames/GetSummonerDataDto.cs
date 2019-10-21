@@ -4,7 +4,7 @@ namespace LeagueOfLegendsFriendTournament.API.Dtos
 {
     public class GetSummonerDataDto
     {
-        [Required]
-        public string username { get; set; }
+        
+        public string Username { get; set; }
     }
 }

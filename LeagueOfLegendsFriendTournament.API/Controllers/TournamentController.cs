@@ -25,6 +25,11 @@ namespace LeagueOfLegendsFriendTournament.API.Controllers
             var createdTournament = await _repo.Create(createTournamentDto);
             return Ok(createdTournament);
         }
+        [HttpPost("addUser")]
+        public async Task<IActionResult> AddUser(AddUserToTournamentDto addUser){
+            var addingUser = await _repo.AddUser(addUser);
+            return Ok(addingUser);
+        }
 
         [HttpGet("retrieve-all-active")]
         public async Task<IActionResult> RetrieveAllActive(){

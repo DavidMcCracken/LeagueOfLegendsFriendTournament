@@ -1,10 +1,17 @@
-<div *ngFor="let tournament of model">
-<div class="card" style="width: 18rem;">
-  
+<div  *ngFor="let tournament of model">
+<div *ngIf="!focusTournament" class="card" style="width: 18rem;">
   <div class="card-body">
     <h5 class="card-title">{{tournament.tournamentName}}</h5>
     <p class="card-text">Created by {{tournament.username}} </p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <a (click)="focusOnTournament(tournament.username)" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>
+</div>
+
+<div *ngIf="focusTournament" class="container">
+  <div class="row justify-content-center">
+    <div class="col-4">
+      <h1></h1>
+    </div>
+  </div>
 </div>

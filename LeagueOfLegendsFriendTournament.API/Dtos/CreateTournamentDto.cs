@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using LeagueOfLegendsFriendTournament.API.Helpers;
 
 namespace LeagueOfLegendsFriendTournament.API.Dtos
 {

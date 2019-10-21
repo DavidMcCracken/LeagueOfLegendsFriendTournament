@@ -27,14 +27,14 @@ namespace LeagueOfLegendsFriendTournament.API.Controllers
         }
 
         
-        [HttpGet("getSummonerData")]
+        [HttpPost("getSummonerData")]
         public async Task<IActionResult> GetSummonerData(GetSummonerDataDto getSummonerDataDto)
         {
             var json = await _repo.GetSummonerData(getSummonerDataDto);
             return Ok(json);
         }
 
-        [HttpGet("getMatchesBasedOffDateTime")]
+        [HttpPost("getMatchesBasedOffDateTime")]
         public async Task<IActionResult> GetMatchesBasedOffDateTime(GetMatchesBasedOffDateTimeDto getMatchesDto)
         {
             var json = await _repo.GetMatchesBasedOffDateTime(getMatchesDto);
@@ -42,7 +42,7 @@ namespace LeagueOfLegendsFriendTournament.API.Controllers
 
         }
         
-        [HttpGet("getMatchDetails")]
+        [HttpPost("getMatchDetails")]
         public async Task<IActionResult> GetMatchDetails(GetMatchFromMatchIdDto getMatch)
         {
             var json = await _repo.GetMatchDetails(getMatch);

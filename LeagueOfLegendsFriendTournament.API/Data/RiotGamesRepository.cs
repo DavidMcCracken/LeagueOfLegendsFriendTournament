@@ -24,9 +24,10 @@ namespace LeagueOfLegendsFriendTournament.API.Data
 
         public async Task<JObject> GetSummonerData(GetSummonerDataDto getMatch)
         {
+            string username = getMatch.Username;
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            string url="https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/"+ getMatch.username;
+            string url="https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/" +username;
             client.DefaultRequestHeaders.Add("X-Riot-Token", _riotToken);
             HttpResponseMessage response = await client.GetAsync(url);
             response.EnsureSuccessStatusCode();
@@ -72,7 +73,7 @@ namespace LeagueOfLegendsFriendTournament.API.Data
             JArray SummonersData= new JArray();
             foreach(var player in players)
             {
-                var user = await GetSummonerData(new GetSummonerDataDto{username = player});
+                var user = await GetSummonerData(new GetSummonerDataDto{Username = player});
                 if(user != null){
                     SummonersData.Add(user);
                 }

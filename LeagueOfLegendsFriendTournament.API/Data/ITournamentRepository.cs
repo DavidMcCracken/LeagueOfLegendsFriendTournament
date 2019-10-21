@@ -12,6 +12,7 @@ namespace LeagueOfLegendsFriendTournament.API.Data
         Task<bool> RemoveFromActive (int tournamentId);
         Task<List<Tournament>> RetrieveAllActive();
         Task<List<JoinTournamentDto>> JoinTournamentData();
+        Task<TournamentUser> AddUser(AddUserToTournamentDto addUser);
 
     }
 }
