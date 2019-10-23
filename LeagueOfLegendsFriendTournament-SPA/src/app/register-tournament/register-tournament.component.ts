@@ -26,7 +26,6 @@ export class RegisterTournamentComponent implements OnInit {
   create() {
     this.model.CreaterOfTournament = this.authService.decodedToken.nameid;
     this.model.active = 1;
-    console.log(typeof(this.model));
     this.createTournamentService.create(this.model).subscribe(() => {
       this.createUser = {'tournamentName': this.model.tournamentName, 'CreaterOfTournament': this.model.CreaterOfTournament};
       if (this.createUser.CreaterOfTournament != null) {

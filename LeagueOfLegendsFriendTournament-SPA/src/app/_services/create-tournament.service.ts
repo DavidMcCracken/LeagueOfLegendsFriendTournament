@@ -24,7 +24,11 @@ constructor(private http: HttpClient) { }
   }
 
   retrieveJoinTournamentList() {
-    return this.http.get(this.baseUrl + 'jointournamentlist');
+    return this.http.get(this.baseUrl + 'GetActiveTournamentsData');
+  }
+
+  retrieveAllUsersInTournament(model: any) {
+    return this.http.post(this.baseUrl + 'getallusersintournament', model);
   }
 
 

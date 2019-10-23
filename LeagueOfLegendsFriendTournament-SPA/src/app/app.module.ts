@@ -19,6 +19,9 @@ import { ActiveTournamentsComponent } from './active-tournaments/active-tourname
 import { AuthGuard } from './_guards/auth.guard';
 import { RegisterTournamentComponent } from './register-tournament/register-tournament.component';
 import { CreateTournamentService } from './_services/create-tournament.service';
+import { TournamentInfoComponent } from './tournament-info/tournament-info.component';
+import { RiotGamesService } from './_services/riot-games.service';
+import { UserService } from './_services/user.service';
 
 
 @NgModule({
@@ -30,7 +33,8 @@ import { CreateTournamentService } from './_services/create-tournament.service';
       JoinTournamentComponent,
       MessagesComponent,
       ActiveTournamentsComponent,
-      RegisterTournamentComponent
+      RegisterTournamentComponent,
+      TournamentInfoComponent
    ],
    imports: [
       BrowserModule,
@@ -44,7 +48,9 @@ import { CreateTournamentService } from './_services/create-tournament.service';
       ErrorInterceptorProvider,
       AlertifyService,
       AuthGuard,
-      CreateTournamentService
+      CreateTournamentService,
+      RiotGamesService,
+      UserService
    ],
    bootstrap: [
       AppComponent

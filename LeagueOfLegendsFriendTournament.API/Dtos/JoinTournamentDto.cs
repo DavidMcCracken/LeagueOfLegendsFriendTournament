@@ -6,6 +6,6 @@ namespace LeagueOfLegendsFriendTournament.API.Dtos
         public string TournamentName { get; set; }
         public int UserId { get; set; }
         public string Username { get; set; }
-        public int Active { get; set; }
+        public string GameType { get; set; }
     }
 }

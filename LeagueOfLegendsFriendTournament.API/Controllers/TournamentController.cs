@@ -37,10 +37,15 @@ namespace LeagueOfLegendsFriendTournament.API.Controllers
             return Ok(tournaments);
         }
 
-        [HttpGet("JoinTournamentList")]
-        public async Task<IActionResult> JoinTournamentData(){
-            var tournaments = await _repo.JoinTournamentData();
+        [HttpGet("GetActiveTournamentsData")]
+        public async Task<IActionResult> GetActiveTournamentsData(){
+            var tournaments = await _repo.GetActiveTournamentsData();
             return Ok(tournaments);
+        }
+        [HttpPost("GetAllUsersInTournament")]
+        public async Task<IActionResult> GetAllUsersInTournament(TournamentIdDto tournamentId){
+            var players = await _repo.GetAllUsersInTournament(tournamentId);
+            return Ok(players);
         }
         
     }

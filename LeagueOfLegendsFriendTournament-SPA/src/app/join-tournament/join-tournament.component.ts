@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CreateTournamentService } from '../_services/create-tournament.service';
-import { UserService } from '../_services/user.service';
-import { forEach } from '@angular/router/src/utils/collection';
-import { Key } from 'protractor';
 import { RiotGamesService } from '../_services/riot-games.service';
 
 @Component({
@@ -12,9 +9,8 @@ import { RiotGamesService } from '../_services/riot-games.service';
 })
 export class JoinTournamentComponent implements OnInit {
   model: any = [];
-  focusTournamentUsername: any = {};
   focusTournament: any = false;
-  final: any = [];
+  tournamentInfo: any;
 
   constructor(private createTournamentService: CreateTournamentService, private riotGamesService: RiotGamesService) { }
 
@@ -22,13 +18,9 @@ export class JoinTournamentComponent implements OnInit {
     this.retrieveAllActive();
   }
 
-  focusOnTournament(username: any) {
-    this.focusTournamentUsername = {'Username': username };
+  focusOnTournament(tournament: any) {
+    this.tournamentInfo = {'tournamentId': tournament.tournamentId, 'gameType': tournament.gameType};
     this.focusTournament = true;
-    this.riotGamesService.GetSummonerData(this.focusTournamentUsername).subscribe(next => {
-      this.final = next;
-      console.log(this.final);
-    });
   }
 
   retrieveAllActive() {

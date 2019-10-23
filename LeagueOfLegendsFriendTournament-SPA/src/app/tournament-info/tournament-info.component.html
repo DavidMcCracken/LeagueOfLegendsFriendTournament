@@ -1,0 +1,6 @@
+<p>players in tournament</p>
+<p>gametype: {{tournamentData.gameType}}</p>
+<div *ngFor="let player of playersData">
+  <p>{{player.username}} {{player.userId}}</p>
+</div>
+<a (click)="joinTournament()" class="btn btn-primary">JOIN</a>

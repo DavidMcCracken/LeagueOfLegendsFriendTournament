@@ -3,7 +3,9 @@
   <div class="card-body">
     <h5 class="card-title">{{tournament.tournamentName}}</h5>
     <p class="card-text">Created by {{tournament.username}} </p>
-    <a (click)="focusOnTournament(tournament.username)" class="btn btn-primary">Go somewhere</a>
+    <p class="card-text">Game Type: {{tournament.gameType}} </p>
+
+    <a (click)="focusOnTournament(tournament)" class="btn btn-primary">See Details</a>
   </div>
 </div>
 </div>
@@ -11,7 +13,7 @@
 <div *ngIf="focusTournament" class="container">
   <div class="row justify-content-center">
     <div class="col-4">
-      <h1></h1>
+      <app-tournament-info [tournamentData]="tournamentInfo"></app-tournament-info>
     </div>
   </div>
 </div>

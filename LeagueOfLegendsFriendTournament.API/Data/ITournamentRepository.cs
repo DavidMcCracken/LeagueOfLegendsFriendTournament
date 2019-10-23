@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using LeagueOfLegendsFriendTournament.API.Dtos;
 using LeagueOfLegendsFriendTournament.API.Models;
+using Newtonsoft.Json.Linq;
 
 namespace LeagueOfLegendsFriendTournament.API.Data
 {
@@ -11,8 +12,9 @@ namespace LeagueOfLegendsFriendTournament.API.Data
         Task<Tournament> Create (CreateTournamentDto createTournamentDto);
         Task<bool> RemoveFromActive (int tournamentId);
         Task<List<Tournament>> RetrieveAllActive();
-        Task<List<JoinTournamentDto>> JoinTournamentData();
+        Task<List<JoinTournamentDto>> GetActiveTournamentsData();
         Task<TournamentUser> AddUser(AddUserToTournamentDto addUser);
+        Task<List<GetAllUsersInTournamentDto>> GetAllUsersInTournament(TournamentIdDto tournamentId);
 
     }
 }

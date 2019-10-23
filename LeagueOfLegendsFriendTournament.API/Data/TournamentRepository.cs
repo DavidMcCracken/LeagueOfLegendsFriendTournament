@@ -4,6 +4,7 @@ using LeagueOfLegendsFriendTournament.API.Models;
 using System.Collections.Generic;
 using System.Linq;
 using LeagueOfLegendsFriendTournament.API.Dtos;
+using Newtonsoft.Json.Linq;
 
 namespace LeagueOfLegendsFriendTournament.API.Data
 {
@@ -32,18 +33,34 @@ namespace LeagueOfLegendsFriendTournament.API.Data
         }
         public async Task<TournamentUser> AddUser(AddUserToTournamentDto addUser)
         {
-            var Tournament = await _context.Tournaments.FirstOrDefaultAsync(x => x.TournamentName == addUser.TournamentName && x.CreatorOfTournament ==addUser.CreaterOfTournament);
+            var Tournament = await _context.Tournaments.FirstOrDefaultAsync(x => x.TournamentId== addUser.TournamentId);
             if(Tournament == null) {
                 return null;
             }
             var TournamentUser = new TournamentUser
             {
-                UserID = addUser.CreaterOfTournament,
+                UserID = addUser.PersonJoiningTournament,
                 TournamentID = Tournament.TournamentId
             };
             await _context.TournamentUsers.AddAsync(TournamentUser);
             await _context.SaveChangesAsync();
             return TournamentUser;
+        }
+        public async Task<List<GetAllUsersInTournamentDto>> GetAllUsersInTournament(TournamentIdDto tournamentId)
+        {
+            var players = await (from ep in _context.TournamentUsers
+            join e in _context.Users on ep.UserID equals e.UserId
+            where ep.TournamentID == tournamentId.TournamentId
+            select new GetAllUsersInTournamentDto {
+                TournamentId = ep.TournamentID,
+                UserId = e.UserId,
+                Username = e.Username,
+            }).ToListAsync();
+            if(players == null){
+                return null;
+            }
+            return players;
+
         }
 
         public async Task<bool> RemoveFromActive(int tournamentId)
@@ -62,7 +79,7 @@ namespace LeagueOfLegendsFriendTournament.API.Data
             return tournaments;
         }
 
-        public async Task<List<JoinTournamentDto>> JoinTournamentData(){
+        public async Task<List<JoinTournamentDto>> GetActiveTournamentsData(){
             var values = await (from ep in _context.Users
             join e in _context.Tournaments on ep.UserId equals e.CreatorOfTournament
             where e.Active == 1
@@ -71,7 +88,7 @@ namespace LeagueOfLegendsFriendTournament.API.Data
                 UserId = ep.UserId,
                 TournamentName = e.TournamentName,
                 Username = ep.Username,
-                Active = e.Active
+                GameType = e.GameType
             }).ToListAsync();
             return values;
         }
