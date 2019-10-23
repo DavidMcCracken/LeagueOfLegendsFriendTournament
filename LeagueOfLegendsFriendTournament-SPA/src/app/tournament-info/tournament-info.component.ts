@@ -1,7 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { CreateTournamentService } from '../_services/create-tournament.service';
 import { AuthService } from '../_services/auth.service';
 import { AlertifyService } from '../_services/alertify.service';
+import { Router } from '@angular/router';
+import { DataService } from '../_services/data.service';
 
 @Component({
   selector: 'app-tournament-info',
@@ -13,9 +15,12 @@ export class TournamentInfoComponent implements OnInit {
   tournamentId: any;
   addingUserToTournament: any;
   playersData: any = [];
+  dataToBeTransfered: any;
+  confirm: any;
+
 
   constructor(private createTournamentService: CreateTournamentService, private authService: AuthService,
-     private alertify: AlertifyService) { }
+     private alertify: AlertifyService, private router: Router,private dataService: DataService) { }
 
   ngOnInit() {
     this.retrieveAllUsersInTournament();
@@ -27,10 +32,17 @@ export class TournamentInfoComponent implements OnInit {
       this.playersData = next;
     });
   }
-  joinTournament(){
+
+  test() {
+    this.dataService.changeMessage(this.playersData);
+    
+    this.router.navigate(['/active-tournaments']);
+
+  }
+  joinTournament() {
     this.addingUserToTournament = {'tournamentId': this.tournamentData.tournamentId,
      'personJoiningTournament': this.authService.decodedToken.nameid};
-    this.createTournamentService.addUser(this.addingUserToTournament).subscribe(next =>{
+    this.createTournamentService.addUser(this.addingUserToTournament).subscribe(next => {
       this.alertify.success('Joined Tournament!');
     }, error => {
       this.alertify.error(error);

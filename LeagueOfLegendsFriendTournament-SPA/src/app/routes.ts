@@ -5,6 +5,7 @@ import { JoinTournamentComponent } from './join-tournament/join-tournament.compo
 import { ActiveTournamentsComponent } from './active-tournaments/active-tournaments.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { RegisterTournamentComponent } from './register-tournament/register-tournament.component';
+import { TournamentInfoComponent } from './tournament-info/tournament-info.component';
 
 export const appRoutes: Routes = [
     { path: '', component: HomeComponent},
@@ -17,6 +18,7 @@ export const appRoutes: Routes = [
             { path: 'join-tournament', component: JoinTournamentComponent},
             { path: 'register-tournament', component: RegisterTournamentComponent},
             { path: 'active-tournaments', component: ActiveTournamentsComponent},
+            { path: 'tournament-info', component: TournamentInfoComponent}
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full'},

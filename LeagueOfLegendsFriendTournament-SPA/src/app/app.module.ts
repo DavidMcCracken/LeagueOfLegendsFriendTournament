@@ -22,6 +22,7 @@ import { CreateTournamentService } from './_services/create-tournament.service';
 import { TournamentInfoComponent } from './tournament-info/tournament-info.component';
 import { RiotGamesService } from './_services/riot-games.service';
 import { UserService } from './_services/user.service';
+import { DataService } from './_services/data.service';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { UserService } from './_services/user.service';
       AuthGuard,
       CreateTournamentService,
       RiotGamesService,
-      UserService
+      UserService,
+      DataService
    ],
    bootstrap: [
       AppComponent
