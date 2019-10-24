@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LeagueOfLegendsFriendTournament.API.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,8 @@ namespace LeagueOfLegendsFriendTournament.API.Migrations
                     TournamentName = table.Column<string>(nullable: true),
                     GameType = table.Column<string>(nullable: true),
                     CreatorOfTournament = table.Column<int>(nullable: false),
-                    Active = table.Column<int>(nullable: false)
+                    Active = table.Column<int>(nullable: false),
+                    PlayerCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

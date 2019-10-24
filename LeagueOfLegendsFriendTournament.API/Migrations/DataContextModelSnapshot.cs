@@ -69,6 +69,8 @@ namespace LeagueOfLegendsFriendTournament.API.Migrations
 
                     b.Property<string>("GameType");
 
+                    b.Property<int>("PlayerCount");
+
                     b.Property<DateTime>("StartTime");
 
                     b.Property<string>("TournamentName");

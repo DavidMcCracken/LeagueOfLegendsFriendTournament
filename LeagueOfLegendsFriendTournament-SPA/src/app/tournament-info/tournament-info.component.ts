@@ -16,11 +16,9 @@ export class TournamentInfoComponent implements OnInit {
   addingUserToTournament: any;
   playersData: any = [];
   dataToBeTransfered: any;
-  confirm: any;
-
 
   constructor(private createTournamentService: CreateTournamentService, private authService: AuthService,
-     private alertify: AlertifyService, private router: Router,private dataService: DataService) { }
+     private alertify: AlertifyService, private router: Router, private dataService: DataService) { }
 
   ngOnInit() {
     this.retrieveAllUsersInTournament();
@@ -34,8 +32,8 @@ export class TournamentInfoComponent implements OnInit {
   }
 
   test() {
-    this.dataService.changeMessage(this.playersData);
-    
+    this.playersData.tournamentName = this.tournamentData.tournamentName;
+    this.dataService.changeCurrentActiveTournamentData(this.playersData);
     this.router.navigate(['/active-tournaments']);
 
   }

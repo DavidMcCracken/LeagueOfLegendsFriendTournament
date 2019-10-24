@@ -11,20 +11,23 @@ namespace LeagueOfLegendsFriendTournament.API.Data
     public class TournamentRepository : ITournamentRepository
     {
         private readonly DataContext _context;
-        public TournamentRepository(DataContext context){
+        public TournamentRepository(DataContext context)
+        {
             this._context = context;
         }
 
         public async Task<Tournament> Create(CreateTournamentDto createTournamentDto)
         {
-            var TournamentToCreate = new Tournament {
+            var TournamentToCreate = new Tournament
+            {
 
                 TournamentName = createTournamentDto.TournamentName,
                 CreatorOfTournament = createTournamentDto.CreaterOfTournament,
                 StartTime = createTournamentDto.StartTime,
                 EndTime = createTournamentDto.EndTime,
                 GameType = createTournamentDto.GameType,
-                Active = 1
+                Active = 1,
+                PlayerCount = 1
             };
             await _context.Tournaments.AddAsync(TournamentToCreate);
             await _context.SaveChangesAsync();
@@ -33,30 +36,37 @@ namespace LeagueOfLegendsFriendTournament.API.Data
         }
         public async Task<TournamentUser> AddUser(AddUserToTournamentDto addUser)
         {
-            var Tournament = await _context.Tournaments.FirstOrDefaultAsync(x => x.TournamentId== addUser.TournamentId);
-            if(Tournament == null) {
+            var Tournament = await _context.Tournaments.FirstOrDefaultAsync(x => x.TournamentId == addUser.TournamentId);
+            if (Tournament == null)
+            {
                 return null;
             }
-            var TournamentUser = new TournamentUser
+            if (Tournament.PlayerCount < 5)
             {
-                UserID = addUser.PersonJoiningTournament,
-                TournamentID = Tournament.TournamentId
-            };
-            await _context.TournamentUsers.AddAsync(TournamentUser);
-            await _context.SaveChangesAsync();
-            return TournamentUser;
+                var TournamentUser = new TournamentUser
+                {
+                    UserID = addUser.PersonJoiningTournament,
+                    TournamentID = Tournament.TournamentId
+                };
+                await _context.TournamentUsers.AddAsync(TournamentUser);
+                await _context.SaveChangesAsync();
+                return TournamentUser;
+            }
+            return null;
         }
         public async Task<List<GetAllUsersInTournamentDto>> GetAllUsersInTournament(TournamentIdDto tournamentId)
         {
             var players = await (from ep in _context.TournamentUsers
-            join e in _context.Users on ep.UserID equals e.UserId
-            where ep.TournamentID == tournamentId.TournamentId
-            select new GetAllUsersInTournamentDto {
-                TournamentId = ep.TournamentID,
-                UserId = e.UserId,
-                Username = e.Username,
-            }).ToListAsync();
-            if(players == null){
+                                 join e in _context.Users on ep.UserID equals e.UserId
+                                 where ep.TournamentID == tournamentId.TournamentId
+                                 select new GetAllUsersInTournamentDto
+                                 {
+                                     TournamentId = ep.TournamentID,
+                                     UserId = e.UserId,
+                                     Username = e.Username,
+                                 }).ToListAsync();
+            if (players == null)
+            {
                 return null;
             }
             return players;
@@ -66,7 +76,8 @@ namespace LeagueOfLegendsFriendTournament.API.Data
         public async Task<bool> RemoveFromActive(int tournamentId)
         {
             var Tournament = await _context.Tournaments.FirstOrDefaultAsync(x => x.TournamentId == tournamentId);
-            if(Tournament == null){
+            if (Tournament == null)
+            {
                 return false;
             }
             _context.Tournaments.Remove(Tournament);
@@ -74,22 +85,25 @@ namespace LeagueOfLegendsFriendTournament.API.Data
             return true;
         }
 
-        public async Task<List<Tournament>> RetrieveAllActive(){
-            var tournaments = await _context.Tournaments.Where(x => x.Active ==1).ToListAsync();
+        public async Task<List<Tournament>> RetrieveAllActive()
+        {
+            var tournaments = await _context.Tournaments.Where(x => x.Active == 1 && x.PlayerCount < 5).ToListAsync();
             return tournaments;
         }
 
-        public async Task<List<JoinTournamentDto>> GetActiveTournamentsData(){
+        public async Task<List<JoinTournamentDto>> GetActiveTournamentsData()
+        {
             var values = await (from ep in _context.Users
-            join e in _context.Tournaments on ep.UserId equals e.CreatorOfTournament
-            where e.Active == 1
-            select new JoinTournamentDto {
-                TournamentId = e.TournamentId,
-                UserId = ep.UserId,
-                TournamentName = e.TournamentName,
-                Username = ep.Username,
-                GameType = e.GameType
-            }).ToListAsync();
+                                join e in _context.Tournaments on ep.UserId equals e.CreatorOfTournament
+                                where e.Active == 1
+                                select new JoinTournamentDto
+                                {
+                                    TournamentId = e.TournamentId,
+                                    UserId = ep.UserId,
+                                    TournamentName = e.TournamentName,
+                                    Username = ep.Username,
+                                    GameType = e.GameType
+                                }).ToListAsync();
             return values;
         }
     }

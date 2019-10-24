@@ -6,6 +6,6 @@ namespace LeagueOfLegendsFriendTournament.API.Dtos
         public int[] MatchId { get; set; }
         public long BeginTime { get; set; }
         public long EndTime { get; set; }
-        
+
     }
 }

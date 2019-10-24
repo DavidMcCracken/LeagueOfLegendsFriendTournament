@@ -8,6 +8,6 @@ namespace LeagueOfLegendsFriendTournament.API.Data
     {
         Task<object> RetrieveUser(int id);
         Task<List<User>> RetrieveAllUsers();
-        
+
     }
 }

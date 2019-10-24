@@ -5,12 +5,19 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class DataService {
-  private messageSource = new BehaviorSubject([]);
-  currentMessage = this.messageSource.asObservable();
+  private currentActiveTournamentSource = new BehaviorSubject([]);
+  currentActiveTournamentData = this.currentActiveTournamentSource.asObservable();
 
-  constructor() { }
+  private currentTournamentNameSource = new BehaviorSubject([]);
+  currentTournamentName = this.currentTournamentNameSource.asObservable();
 
-  changeMessage(message: any) {
-    this.messageSource.next(message);
+  constructor() {}
+
+  changeCurrentActiveTournamentData(data: any) {
+    this.currentActiveTournamentSource.next(data);
+  }
+
+  changecurrentTournamentNameSource(data: any) {
+    this.currentTournamentNameSource.next(data);
   }
 }

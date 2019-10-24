@@ -11,10 +11,10 @@ using Newtonsoft.Json.Linq;
 
 namespace LeagueOfLegendsFriendTournament.API.Controllers
 {
-    
+
     [Route("api/[controller]")]
     [ApiController]
-    public class RiotGamesController: ControllerBase
+    public class RiotGamesController : ControllerBase
     {
         private readonly IRiotGamesRepository _repo;
         private readonly IConfiguration _config;
@@ -26,7 +26,7 @@ namespace LeagueOfLegendsFriendTournament.API.Controllers
             this._config = config;
         }
 
-        
+
         [HttpPost("getSummonerData")]
         public async Task<IActionResult> GetSummonerData(GetSummonerDataDto getSummonerDataDto)
         {
@@ -41,7 +41,7 @@ namespace LeagueOfLegendsFriendTournament.API.Controllers
             return Ok(json);
 
         }
-        
+
         [HttpPost("getMatchDetails")]
         public async Task<IActionResult> GetMatchDetails(GetMatchFromMatchIdDto getMatch)
         {

@@ -36,7 +36,7 @@ namespace LeagueOfLegendsFriendTournament.API.Controllers
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            string url="https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/twokdavey";
+            string url = "https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/twokdavey";
             client.DefaultRequestHeaders.Add("X-Riot-Token", riotToken);
             HttpResponseMessage response = await client.GetAsync(url);
             response.EnsureSuccessStatusCode();

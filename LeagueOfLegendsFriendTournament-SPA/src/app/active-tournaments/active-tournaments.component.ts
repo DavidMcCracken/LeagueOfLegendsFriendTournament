@@ -15,7 +15,8 @@ export class ActiveTournamentsComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.dataService.currentMessage.subscribe(x => this.ActiveTournament = x);
+    console.log('this' + typeof(this.ActiveTournament));
+    this.dataService.currentActiveTournamentData.subscribe(x => this.ActiveTournament = x);
   }
 
 }

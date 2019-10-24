@@ -7,11 +7,11 @@ namespace LeagueOfLegendsFriendTournament.API.Models
 
         //Foreign key for USER
         public int UserID { get; set; }
-        public User User{ get; set; }
+        public User User { get; set; }
 
         //Foreign key for Tournament
         public int TournamentID { get; set; }
-        public Tournament Tournament{ get; set; }
+        public Tournament Tournament { get; set; }
 
         //Data about the specific matches that are sent to database
         public bool Win { get; set; }
@@ -25,6 +25,6 @@ namespace LeagueOfLegendsFriendTournament.API.Models
         public int VisionScore { get; set; }
         public string Champion { get; set; }
         public string Role { get; set; }
-        
+
     }
 }

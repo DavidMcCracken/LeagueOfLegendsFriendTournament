@@ -9,8 +9,8 @@ namespace LeagueOfLegendsFriendTournament.API.Data
 {
     public interface ITournamentRepository
     {
-        Task<Tournament> Create (CreateTournamentDto createTournamentDto);
-        Task<bool> RemoveFromActive (int tournamentId);
+        Task<Tournament> Create(CreateTournamentDto createTournamentDto);
+        Task<bool> RemoveFromActive(int tournamentId);
         Task<List<Tournament>> RetrieveAllActive();
         Task<List<JoinTournamentDto>> GetActiveTournamentsData();
         Task<TournamentUser> AddUser(AddUserToTournamentDto addUser);

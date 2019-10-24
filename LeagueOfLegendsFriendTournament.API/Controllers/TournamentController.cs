@@ -14,39 +14,45 @@ namespace LeagueOfLegendsFriendTournament.API.Controllers
         private readonly ITournamentRepository _repo;
         private readonly IConfiguration _config;
 
-        public TournamentController(ITournamentRepository repo, IConfiguration config){
+        public TournamentController(ITournamentRepository repo, IConfiguration config)
+        {
             this._repo = repo;
             this._config = config;
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create(CreateTournamentDto createTournamentDto){
-            
+        public async Task<IActionResult> Create(CreateTournamentDto createTournamentDto)
+        {
+
             var createdTournament = await _repo.Create(createTournamentDto);
             return Ok(createdTournament);
         }
         [HttpPost("addUser")]
-        public async Task<IActionResult> AddUser(AddUserToTournamentDto addUser){
+        public async Task<IActionResult> AddUser(AddUserToTournamentDto addUser)
+        {
             var addingUser = await _repo.AddUser(addUser);
             return Ok(addingUser);
         }
 
         [HttpGet("retrieve-all-active")]
-        public async Task<IActionResult> RetrieveAllActive(){
+        public async Task<IActionResult> RetrieveAllActive()
+        {
             var tournaments = await _repo.RetrieveAllActive();
             return Ok(tournaments);
         }
 
         [HttpGet("GetActiveTournamentsData")]
-        public async Task<IActionResult> GetActiveTournamentsData(){
+        public async Task<IActionResult> GetActiveTournamentsData()
+        {
             var tournaments = await _repo.GetActiveTournamentsData();
             return Ok(tournaments);
         }
         [HttpPost("GetAllUsersInTournament")]
-        public async Task<IActionResult> GetAllUsersInTournament(TournamentIdDto tournamentId){
+        public async Task<IActionResult> GetAllUsersInTournament(TournamentIdDto tournamentId)
+        {
             var players = await _repo.GetAllUsersInTournament(tournamentId);
             return Ok(players);
         }
-        
+
     }
 }

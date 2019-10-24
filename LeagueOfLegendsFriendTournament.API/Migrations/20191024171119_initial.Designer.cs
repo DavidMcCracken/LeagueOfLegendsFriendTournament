@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LeagueOfLegendsFriendTournament.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190930062858_Initial")]
-    partial class Initial
+    [Migration("20191024171119_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -70,6 +70,8 @@ namespace LeagueOfLegendsFriendTournament.API.Migrations
                     b.Property<DateTime>("EndTime");
 
                     b.Property<string>("GameType");
+
+                    b.Property<int>("PlayerCount");
 
                     b.Property<DateTime>("StartTime");
 

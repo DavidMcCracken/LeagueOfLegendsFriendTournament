@@ -1,4 +1,11 @@
-<p>
-  active-tournaments works!
-  {{ActiveTournament}}
-</p>
+<p *ngIf="ActiveTournament !== undefined">please choose tournament for details</p>
+
+<div *ngIf="ActiveTournament != null">
+    <p>
+        active-tournaments works! {{ActiveTournament}}
+        {{ActiveTournament.tournamentName}}
+      </p>
+      <div *ngFor="let player of ActiveTournament">
+          <p>{{player.userId}} {{player.username}} {{player.tournamentId}}</p>
+        </div>
+</div>

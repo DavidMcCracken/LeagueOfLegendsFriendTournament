@@ -11,11 +11,11 @@ namespace LeagueOfLegendsFriendTournament.API.Models
 
         //Foreign key for USER
         public int UserID { get; set; }
-        public User User{ get; set; }
+        public User User { get; set; }
 
         //Foreign key for Tournament
         public int TournamentID { get; set; }
-        public Tournament Tournament{ get; set; }
+        public Tournament Tournament { get; set; }
 
     }
 }
