@@ -49,10 +49,16 @@ namespace LeagueOfLegendsFriendTournament.API.Controllers
             return Ok(json);
         }
 
-        [HttpGet("GetSummonerDataMultiple")]
-        public async Task<IActionResult> GetSummonerDataMultiple()
+        [HttpPost("GetSummonerDataMultiple")]
+        public async Task<IActionResult> GetSummonerDataMultiple(GetSummonersDataDto summoners)
         {
-            var json = await _repo.GetSummonerDataMultiple();
+            var json = await _repo.GetSummonerDataMultiple(summoners);
+            return Ok(json);
+        }
+        [HttpPost("GetMatchesBasedOffDateTimeMultiple")]
+        public async Task<IActionResult> GetMatchesBasedOffDateTimeMultiple(JArray matches)
+        {
+            var json = await _repo.GetMatchesBasedOffDateTimeMultiple(matches);
             return Ok(json);
         }
 

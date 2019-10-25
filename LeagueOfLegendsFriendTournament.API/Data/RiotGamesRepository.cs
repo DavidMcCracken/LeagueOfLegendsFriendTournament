@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using LeagueOfLegendsFriendTournament.API.Dtos;
 using LeagueOfLegendsFriendTournament.API.Dtos.RiotGames;
 using LeagueOfLegendsFriendTournament.API.Helpers;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace LeagueOfLegendsFriendTournament.API.Data
@@ -41,11 +43,11 @@ namespace LeagueOfLegendsFriendTournament.API.Data
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             string url = "https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/" + getMatches.AccountId +
-            "?queue=" + getMatches.MatchId[0] +
-            "&queue=" + getMatches.MatchId[1] +
-            "&queue=" + getMatches.MatchId[2] +
-            "&queue=" + getMatches.MatchId[3] +
-            "&queue=" + getMatches.MatchId[4] +
+            "?queue=" + 400 +
+            "&queue=" + 410 +
+            "&queue=" + 420 +
+            "&queue=" + 430 +
+            "&queue=" + 440 +
             "&endTime=" + getMatches.EndTime +
             "&beginTime=" + getMatches.BeginTime;
             client.DefaultRequestHeaders.Add("X-Riot-Token", _riotToken);
@@ -53,6 +55,12 @@ namespace LeagueOfLegendsFriendTournament.API.Data
             response.EnsureSuccessStatusCode();
             var body = await response.Content.ReadAsStringAsync();
             JObject json = JObject.Parse(body);
+            JArray arjson = new JArray(json);
+            foreach (JObject obj in arjson)
+            {
+                obj.Add(getMatches.AccountId, obj.GetValue("matches"));
+                obj.Property("matches").Remove();
+            }
             return json;
         }
         public async Task<JObject> GetMatchDetails(GetMatchFromMatchIdDto getMatch)
@@ -65,13 +73,15 @@ namespace LeagueOfLegendsFriendTournament.API.Data
             response.EnsureSuccessStatusCode();
             var body = await response.Content.ReadAsStringAsync();
             JObject json = JObject.Parse(body);
+            JArray arjson = new JArray(json);
+
             return json;
         }
-        public async Task<JArray> GetSummonerDataMultiple()
+        public async Task<JArray> GetSummonerDataMultiple(GetSummonersDataDto summoners)
         {
-            string[] players = { "twokdavey", "jimlan", "captainwalrus69", "pynkcoffee" };
+
             JArray SummonersData = new JArray();
-            foreach (var player in players)
+            foreach (var player in summoners.Username)
             {
                 var user = await GetSummonerData(new GetSummonerDataDto { Username = player });
                 if (user != null)
@@ -82,7 +92,26 @@ namespace LeagueOfLegendsFriendTournament.API.Data
             return SummonersData;
         }
 
+        public async Task<JArray> GetMatchesBasedOffDateTimeMultiple(JArray matches)
+        {
+            JArray MatchesData = new JArray();
+            foreach (var match in matches)
+            {
+                var matchData = await GetMatchesBasedOffDateTime(
+                    new GetMatchesBasedOffDateTimeDto
+                    {
+                        AccountId = match.Value<string>("accountid"),
+                        BeginTime = match.Value<long>("begintime"),
+                        EndTime = match.Value<long>("endtime")
+                    });
+                if (matchData != null)
+                {
+                    MatchesData.Add(matchData);
+                }
+            }
+            return MatchesData;
 
+        }
     }
 }
 

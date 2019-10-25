@@ -26,8 +26,8 @@ constructor(private http: HttpClient) { }
     return this.http.get(this.baseUrl + 'getmatchesdetails', model);
   }
 
-  getSummonerDataMultiple() {
-    return this.http.get(this.baseUrl + 'getsummonerdatamultiple');
+  getSummonerDataMultiple(model: any) {
+    return this.http.post(this.baseUrl + 'getsummonerdatamultiple', model);
   }
 
 

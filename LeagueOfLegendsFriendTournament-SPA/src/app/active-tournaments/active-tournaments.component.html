@@ -12,7 +12,7 @@
       <p class="card-text">Created by {{ tournament.username }}</p>
       <p class="card-text">Game Type: {{ tournament.gameType }}</p>
 
-      <a (click)="showActiveTournamentsForUser()" class="btn btn-primary"
+      <a (click)="displayActiveTournament(tournament)" class="btn btn-primary"
         >See Details</a
       >
     </div>
@@ -27,5 +27,9 @@
   <div *ngFor="let player of ActiveTournament">
     <p>{{ player.userId }} {{ player.username }} {{ player.tournamentId }}</p>
   </div>
-
+  <div *ngFor="let playerID of RiotIdData">
+    <p>
+      {{ playerID.id }}
+    </p>
+  </div>
 </div>
