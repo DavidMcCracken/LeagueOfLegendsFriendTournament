@@ -31,5 +31,9 @@ constructor(private http: HttpClient) { }
     return this.http.post(this.baseUrl + 'getallusersintournament', model);
   }
 
+  getActiveTournamentsForUsers(model: any) {
+    return this.http.post(this.baseUrl + 'getactivetournamentsforusers', model);
+  }
+
 
 }

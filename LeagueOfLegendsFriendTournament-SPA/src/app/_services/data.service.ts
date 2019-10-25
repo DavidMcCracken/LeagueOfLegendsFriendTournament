@@ -5,10 +5,10 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class DataService {
-  private currentActiveTournamentSource = new BehaviorSubject([]);
+  private currentActiveTournamentSource = new BehaviorSubject(undefined);
   currentActiveTournamentData = this.currentActiveTournamentSource.asObservable();
 
-  private currentTournamentNameSource = new BehaviorSubject([]);
+  private currentTournamentNameSource = new BehaviorSubject(undefined);
   currentTournamentName = this.currentTournamentNameSource.asObservable();
 
   constructor() {}

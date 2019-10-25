@@ -15,6 +15,7 @@ namespace LeagueOfLegendsFriendTournament.API.Data
         Task<List<JoinTournamentDto>> GetActiveTournamentsData();
         Task<TournamentUser> AddUser(AddUserToTournamentDto addUser);
         Task<List<GetAllUsersInTournamentDto>> GetAllUsersInTournament(TournamentIdDto tournamentId);
+        Task<List<Tournament>> GetActiveTournamentsForUsers(GetActiveTournamentsForUserDto activeTournaments); 
 
     }
 }

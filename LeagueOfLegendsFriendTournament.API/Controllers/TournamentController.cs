@@ -54,5 +54,12 @@ namespace LeagueOfLegendsFriendTournament.API.Controllers
             return Ok(players);
         }
 
+        [HttpPost("GetActiveTournamentsForUsers")]
+        public async Task<IActionResult> GetActiveTournamentsForUsers(GetActiveTournamentsForUserDto activeTournaments)
+        {
+            var tournaments = await _repo.GetActiveTournamentsForUsers(activeTournaments);
+            return Ok(tournaments);
+        }
+
     }
 }

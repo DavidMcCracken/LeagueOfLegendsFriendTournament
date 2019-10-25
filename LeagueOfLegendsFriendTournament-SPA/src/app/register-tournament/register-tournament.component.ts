@@ -2,6 +2,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AlertifyService } from '../_services/alertify.service';
 import { CreateTournamentService } from '../_services/create-tournament.service';
 import { AuthService } from '../_services/auth.service';
+import { e } from '@angular/core/src/render3';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-register-tournament',
@@ -15,6 +17,8 @@ export class RegisterTournamentComponent implements OnInit {
   gameTypes: string[] = ['MOST_KILLS', 'MOST_DEATHS', 'LEAST_DEATHS', 'MOST_ASSISTS', 'LONGEST_LIVING_SPREE', 'LARGEST_KILLING_SPREE',
   'MOST_GOLD_EARNED', 'MOST_TOTAL_DAMAGE_DEALT', 'LARGEST_VISION_SCORE', 'BEST_KDA_CHAMP_SPECIFIC', 'BEST_KDA_ROLE_SPECIFIC'
 ];
+  createdTournament: any;
+  createdUser: any;
 
   constructor(public authService: AuthService, private createTournamentService: CreateTournamentService,
     private alertify: AlertifyService) { }
@@ -26,14 +30,20 @@ export class RegisterTournamentComponent implements OnInit {
   create() {
     this.model.CreaterOfTournament = this.authService.decodedToken.nameid;
     this.model.active = 1;
-    this.createTournamentService.create(this.model).subscribe(() => {
-      this.createUser = {'tournamentName': this.model.tournamentName, 'CreaterOfTournament': this.model.CreaterOfTournament};
-      if (this.createUser.CreaterOfTournament != null) {
-        this.createTournamentService.addUser(this.createUser).subscribe();
+    this.createTournamentService.create(this.model).subscribe(next => {
+      this.createdTournament = next;
+      this.createUser = {'tournamentId': this.createdTournament.tournamentId, 'PersonJoiningTournament': this.model.CreaterOfTournament};
+         this.createTournamentService.addUser(this.createUser).subscribe(next => {
+          this.createdUser = next;
+        if(isUndefined(this.createdUser)){
+          this.alertify.error('Tournament is already made');
+
+        } else {
+          this.alertify.success('Thank you for registering');
+
       }
-      this.alertify.success('Thank you for registering');
-    }, error => {
-        this.alertify.error(error);
+        });
+        
     });
   }
 

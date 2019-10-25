@@ -1,11 +1,31 @@
-<p *ngIf="ActiveTournament !== undefined">please choose tournament for details</p>
+<div *ngIf="ActiveTournament == undefined">
+  <p>
+    These are the tournaments you are in! Please select one for more details
+  </p>
+  <div
+    *ngFor="let tournament of TournamentsUserIsIn"
+    class="card"
+    style="width: 18rem;"
+  >
+    <div class="card-body">
+      <h5 class="card-title">{{ tournament.tournamentName }}</h5>
+      <p class="card-text">Created by {{ tournament.username }}</p>
+      <p class="card-text">Game Type: {{ tournament.gameType }}</p>
+
+      <a (click)="showActiveTournamentsForUser()" class="btn btn-primary"
+        >See Details</a
+      >
+    </div>
+  </div>
+</div>
 
 <div *ngIf="ActiveTournament != null">
-    <p>
-        active-tournaments works! {{ActiveTournament}}
-        {{ActiveTournament.tournamentName}}
-      </p>
-      <div *ngFor="let player of ActiveTournament">
-          <p>{{player.userId}} {{player.username}} {{player.tournamentId}}</p>
-        </div>
+  <p>
+    active-tournaments works! {{ ActiveTournament }}
+    {{ ActiveTournament.tournamentName }}
+  </p>
+  <div *ngFor="let player of ActiveTournament">
+    <p>{{ player.userId }} {{ player.username }} {{ player.tournamentId }}</p>
+  </div>
+
 </div>

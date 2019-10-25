@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { Router } from '@angular/router';
+import { DataService } from '../_services/data.service';
 
 @Component({
   selector: 'app-nav',
@@ -11,7 +12,8 @@ import { Router } from '@angular/router';
 export class NavComponent implements OnInit {
   model: any = {};
 
-  constructor(public authService: AuthService, private alertify: AlertifyService, private router: Router) { }
+  constructor(public authService: AuthService, private alertify: AlertifyService,
+     private router: Router, private dataService: DataService) { }
 
   ngOnInit() {
   }
@@ -35,6 +37,10 @@ export class NavComponent implements OnInit {
     localStorage.removeItem('userId');
     this.alertify.message('Logged out');
     this.router.navigate(['/home']);
+  }
+
+  activeTournamentClick() {
+    this.dataService.changeCurrentActiveTournamentData(undefined);
   }
 
 }
