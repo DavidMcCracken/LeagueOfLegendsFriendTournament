@@ -43,11 +43,11 @@ export class ActiveTournamentsComponent implements OnInit {
         this.createAccountIdJson(tournament);
         this.riotGames.getMatchesBasedOffDateTimeMultiple(this.Json.users).subscribe( games => {
           this.RiotMatches = games;
-          this.createMatchIdJson(this.RiotMatches);
+          this.createMatchIdJson();
           this.riotGames.getMatchesDetailsMultiple(this.Json.matchId).subscribe( details => {
             this.RiotMatchesDetailed = details;
             this.compiledDataFinish();
-          })
+          });
         })
       });
     });
@@ -72,7 +72,7 @@ export class ActiveTournamentsComponent implements OnInit {
     }
 
   }
-  createMatchIdJson(riotMatches: any) {
+  createMatchIdJson() {
     this.Json.matchId = [];
 
 
@@ -86,20 +86,36 @@ export class ActiveTournamentsComponent implements OnInit {
   }
 
   compiledDataFinish() {
-    console.log(this.compiledData);
-    console.log(this.RiotMatchesDetailed);
+
     for ( let i = 0; i < this.compiledData.length; i++) {
-      for( let j = 0; j < this.compiledData[i].matchIds.length; j++) {
+      for ( let j = 0; j < this.compiledData[i].matchIds.length; j++) {
         for ( let k = 0; k < this.RiotMatchesDetailed.length; k++) {
-          console.log('compare compiled: ' + this.compiledData[i].matchIds[j].matchId
-           + 'uncompiled: ' + this.RiotMatchesDetailed[k].gameId);
           if (this.compiledData[i].matchIds[j].matchId === this.RiotMatchesDetailed[k].gameId) {
+            for ( let l = 0; l < this.RiotMatchesDetailed[k].participantIdentities.length; l++){
+              if (this.compiledData[i].accountid === this.RiotMatchesDetailed[k].participantIdentities[l].player.accountId) {
+                this.compiledData[i].matchIds[j].participantId = this.RiotMatchesDetailed[k].participantIdentities[l].participantId;
+              }
+            }
             this.compiledData[i].matchIds[j].MatchDetails = this.RiotMatchesDetailed[k];
             break;
           }
         }
       }
     }
-    console.log(this.compiledData);
+
+    this.cleanUpCompiledData();
+  }
+  cleanUpCompiledData() {
+    for ( let i = 0; i < this.compiledData.length; i++) {
+      for ( let j = 0; j < this.compiledData[i].matchIds.length; j++) {
+        delete this.compiledData[i].matchIds[j].MatchDetails.participantIdentities;
+          for ( let k = 0; k < this.compiledData[i].matchIds[j].MatchDetails.participants.length; k++) {
+            if (this.compiledData[i].matchIds[j].participantId === this.compiledData[i].matchIds[j]
+              .MatchDetails.participants[k].participantId) {
+              this.compiledData[i].matchIds[j].matchStats = this.compiledData[i].matchIds[j].MatchDetails.participants[k];
+            }
+        }
+      }
+    }
   }
 }
