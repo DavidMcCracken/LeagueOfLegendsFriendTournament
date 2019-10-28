@@ -48,7 +48,7 @@ export class TournamentInfoComponent implements OnInit {
       if (!isUndefined(user)) {
         this.alertify.success('Joined Tournament!');
       this.playersData.tournamentName = this.tournamentData.tournamentName;
-      this.dataService.changeCurrentActiveTournamentData(this.playersData);
+      this.dataService.changeCurrentActiveTournamentData(this.tournamentData);
       this.router.navigate(['/active-tournaments']);
       } else {
         this.alertify.error('Something went wrong');

@@ -9,7 +9,7 @@
   >
     <div class="card-body">
       <h5 class="card-title">{{ tournament.tournamentName }}</h5>
-      <p class="card-text">Created by {{ tournament.username }}</p>
+      <p class="card-text">Created by: {{ tournament.creatorUsername }}</p>
       <p class="card-text">Game Type: {{ tournament.gameType }}</p>
 
       <a (click)="displayActiveTournament(tournament)" class="btn btn-primary"
@@ -19,7 +19,7 @@
   </div>
 </div>
 
-<div *ngIf="ActiveTournament != null">
+<div *ngIf="ActiveTournament != undefined">
   <p>
     active-tournaments works! {{ ActiveTournament }}
     {{ ActiveTournament.tournamentName }}
@@ -27,9 +27,23 @@
   <div *ngFor="let player of ActiveTournament">
     <p>{{ player.userId }} {{ player.username }} {{ player.tournamentId }}</p>
   </div>
+  <p>here is player ID</p>
   <div *ngFor="let playerID of RiotIdData">
     <p>
-      {{ playerID.id }}
+      {{ playerID.accountId }}
     </p>
   </div>
-</div>
+  <p>PLAYER MATCHES</p>
+
+
+  <div *ngFor="let data of RiotMatches">
+    <div *ngFor="let match of data.matches">
+    <p>
+        {{data.accountid}} {{ match.champion }} {{ match.gameId }} {{ match.lane }}, {{ match.queue }}
+        {{ match.timestamp }}    
+      </p>
+  </div>
+  </div>
+  </div>
+
+

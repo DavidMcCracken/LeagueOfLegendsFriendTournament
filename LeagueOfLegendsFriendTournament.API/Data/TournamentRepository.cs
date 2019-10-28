@@ -112,12 +112,26 @@ namespace LeagueOfLegendsFriendTournament.API.Data
                                 }).ToListAsync();
             return values;
         }
-        public async Task<List<Tournament>> GetActiveTournamentsForUsers(GetActiveTournamentsForUserDto activeTournaments)
+        public async Task<List<GetActiveTournamentsForUserDto>> GetActiveTournamentsForUsers(GetActiveTournamentsForUserDto activeTournaments)
         {
             var tournaments = await (from tu in _context.TournamentUsers
                                      join t in _context.Tournaments on tu.TournamentID equals t.TournamentId
+                                     join u in _context.Users on t.CreatorOfTournament equals u.UserId
                                      where tu.UserID == activeTournaments.UserId && t.Active == 1
-                                     select t).ToListAsync();
+                                     select new GetActiveTournamentsForUserDto{
+                                         UserId = u.UserId,
+                                         CreatorUsername = u.Username,
+                                         tournamentId = t.TournamentId,
+                                         startTime = t.StartTime,
+                                         endTime = t.EndTime,
+                                         tournamentName = t.TournamentName,
+                                         gameType = t.GameType,
+                                         creatorOfTournament = t.CreatorOfTournament,
+                                         active = t.Active,
+                                         playerCount = t.PlayerCount
+
+                                     }).ToListAsync();
+
             return tournaments;
         }
     }

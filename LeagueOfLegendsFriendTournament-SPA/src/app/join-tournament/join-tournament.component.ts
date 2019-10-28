@@ -13,22 +13,23 @@ export class JoinTournamentComponent implements OnInit {
   focusTournament: any = false;
   tournamentInfo: any;
 
-  constructor(private createTournamentService: CreateTournamentService, private riotGamesService: RiotGamesService, 
-    private dataService: DataService) { }
+  constructor(private createTournamentService: CreateTournamentService) { }
 
   ngOnInit() {
     this.retrieveAllActive();
   }
 
   focusOnTournament(tournament: any) {
-    this.tournamentInfo = {'tournamentId': tournament.tournamentId, 'gameType': tournament.gameType, 
-  'tournamentName': tournament.tournamentName};
+    this.tournamentInfo = {'tournamentId': tournament.tournamentId, 'gameType': tournament.gameType,
+  'tournamentName': tournament.tournamentName, 'username': tournament.username};
     this.focusTournament = true;
+    console.log('tournament: ' + tournament);
   }
 
   retrieveAllActive() {
     this.createTournamentService.retrieveJoinTournamentList().subscribe(next => {
       this.model = next;
+      console.log(this.model);
     });
   }
 

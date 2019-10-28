@@ -13,11 +13,13 @@ namespace LeagueOfLegendsFriendTournament.API.Controllers
     {
         private readonly ITournamentRepository _repo;
         private readonly IConfiguration _config;
+        private readonly IUserRepository _user;
 
-        public TournamentController(ITournamentRepository repo, IConfiguration config)
+        public TournamentController(ITournamentRepository repo, IConfiguration config, IUserRepository user)
         {
             this._repo = repo;
             this._config = config;
+            this._user = user;
         }
 
         [HttpPost("create")]

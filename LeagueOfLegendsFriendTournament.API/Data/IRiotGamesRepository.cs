@@ -12,6 +12,6 @@ namespace LeagueOfLegendsFriendTournament.API.Data
         Task<JObject> GetMatchDetails(GetMatchFromMatchIdDto getMatch);
         Task<JArray> GetSummonerDataMultiple(GetSummonersDataDto summoners);
         Task<JArray> GetMatchesBasedOffDateTimeMultiple(JArray matches);
-
+        Task<JArray> GetMatchDetailsMultiple(JArray match);
     }
 }

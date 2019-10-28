@@ -22,12 +22,19 @@ constructor(private http: HttpClient) { }
     return this.http.get(this.baseUrl + 'getmatchesbasedoffdatetime', model);
   }
 
+  getMatchesBasedOffDateTimeMultiple(model: any) {
+    return this.http.post(this.baseUrl + 'getmatchesbasedoffdatetimemultiple', model);
+  }
+
   getMatchesDetails(model: any) {
     return this.http.get(this.baseUrl + 'getmatchesdetails', model);
   }
 
   getSummonerDataMultiple(model: any) {
     return this.http.post(this.baseUrl + 'getsummonerdatamultiple', model);
+  }
+  getMatchesDetailsMultiple(model: any) {
+    return this.http.post(this.baseUrl + 'getmatchdetailsmultiple', model);
   }
 
 

@@ -61,6 +61,12 @@ namespace LeagueOfLegendsFriendTournament.API.Controllers
             var json = await _repo.GetMatchesBasedOffDateTimeMultiple(matches);
             return Ok(json);
         }
+        [HttpPost("GetMatchDetailsMultiple")]
+        public async Task<IActionResult> GetMatchDetailsMultiple(JArray matches)
+        {
+            var json = await _repo.GetMatchDetailsMultiple(matches);
+            return Ok(json);
+        }
 
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -22,7 +23,6 @@ namespace LeagueOfLegendsFriendTournament.API.Data
             this._riotToken = token.RiotToken;
             this._champData = token.RiotChampionsData;
         }
-
 
         public async Task<JObject> GetSummonerData(GetSummonerDataDto getMatch)
         {
@@ -52,14 +52,18 @@ namespace LeagueOfLegendsFriendTournament.API.Data
             "&beginTime=" + getMatches.BeginTime;
             client.DefaultRequestHeaders.Add("X-Riot-Token", _riotToken);
             HttpResponseMessage response = await client.GetAsync(url);
+            if(HttpResponseMessage.Equals(response.StatusCode, HttpStatusCode.NotFound)) {
+                JObject noData = JObject.Parse(@"{'data': 'cannot be found'}");
+                return noData;
+            }
             response.EnsureSuccessStatusCode();
+
             var body = await response.Content.ReadAsStringAsync();
             JObject json = JObject.Parse(body);
             JArray arjson = new JArray(json);
             foreach (JObject obj in arjson)
             {
-                obj.Add(getMatches.AccountId, obj.GetValue("matches"));
-                obj.Property("matches").Remove();
+                obj.Add("accountid", getMatches.AccountId);
             }
             return json;
         }
@@ -110,7 +114,24 @@ namespace LeagueOfLegendsFriendTournament.API.Data
                 }
             }
             return MatchesData;
+        }
 
+        public async Task<JArray> GetMatchDetailsMultiple(JArray matches)
+        {
+            JArray matchesDetails = new JArray();
+            foreach (var match in matches)
+            {
+                var matchDetail = await GetMatchDetails(
+                    new GetMatchFromMatchIdDto
+                    {
+                        MatchId = match.Value<long>("matchId")
+                    });
+                    if (matchDetail != null)
+                    {
+                        matchesDetails.Add(matchDetail);
+                    }
+            }
+            return matchesDetails;
         }
     }
 }
